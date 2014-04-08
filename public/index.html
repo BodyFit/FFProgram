@@ -2,10 +2,22 @@
 
 <head>
     <meta charset="utf-8">
+    <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
+    <link href="/stylesheets/style.css" rel="stylesheet">
     <title>Other title</title>
 </head>
 
 <body>
+    <script type="text/ng-template" id="my-check-box-template">
+        <div>
+            <span ng-transclude></span>
+            <span ng-click="checkClicked()">
+                <i class="fa fa-check-square-o" ng-show="isChecked"></i>
+                <i class="fa fa-square-o" ng-show="!isChecked"></i>
+            </span>            
+        </div>
+    </script>
+
     <div ng-controller="TestCtrl">
         <input ng-model="inputBox"></input>
         <span ng-bind="defaultString"></span>
@@ -14,8 +26,16 @@
         <button ng-click="doSth()">click me!</button>
         {{defaultString}} {{inputBox}} {{result}}
         <button ng-click="getItems()">Get items</button>
+        <span ng-bind="checkedItems"></span>
         <ul>
-            <li ng-repeat="item in items">{{item.text}}: {{item.value}} - {{item}}</li>
+            <li ng-repeat="item in items">
+                <div class="container">
+                    <div class="background" style="background-color:pink"></div>
+                    <div class="overlay">
+                        <div my-check-box is-checked="item.isChecked">{{item.text}}: {{item.value}}</div>
+                    </div>
+                </div>
+            </li>
         </ul>
     </div>
 
