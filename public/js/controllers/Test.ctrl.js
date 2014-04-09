@@ -10,12 +10,10 @@
              $scope.getItems = function() {
                  $testService.getItems().success(function(data) {
                      $scope.items = data;
-                     $scope.$watch('items', function() {
-                         $scope.updateItemsCount();
-                     }, true);
                  });
              };
-             $scope.updateItemsCount = function() {
+             
+             $scope.checkedItems = function() {
                  var count = 0;
 
                  angular.forEach($scope.items, function(item) {
@@ -24,10 +22,8 @@
                      }
                  });
 
-                 $scope.checkedItems = count;
+                 return count;
              };
-
-             $scope.updateItemsCount();
          }
      ]);
  });

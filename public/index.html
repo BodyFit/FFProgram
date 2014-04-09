@@ -18,6 +18,18 @@
         </div>
     </script>
 
+    <script type="text/ng-template" id="view1-template.html">
+        <div ng-controller="View1Ctrl">
+            Hello {{name}} from view1!
+        </div>
+    </script>
+
+    <script type="text/ng-template" id="view2-template.html">
+        <div ng-controller="View2Ctrl">
+            Hello {{name}} from view2!
+        </div>
+    </script>
+
     <div ng-controller="TestCtrl">
         <input ng-model="inputBox"></input>
         <span ng-bind="defaultString"></span>
@@ -26,17 +38,27 @@
         <button ng-click="doSth()">click me!</button>
         {{defaultString}} {{inputBox}} {{result}}
         <button ng-click="getItems()">Get items</button>
-        <span ng-bind="checkedItems"></span>
-        <ul>
-            <li ng-repeat="item in items">
+        <span ng-bind="checkedItems()"></span>
+        <ul class="plain-list">
+            <li ng-repeat="item in items" class="item">
                 <div class="container">
-                    <div class="background" style="background-color:pink"></div>
+                    <div class="background" style="background-color:red" ng-show="item.isChecked"></div>
+                    <div class="background" style="background-color:green" ng-show="!item.isChecked"></div>
                     <div class="overlay">
                         <div my-check-box is-checked="item.isChecked">{{item.text}}: {{item.value}}</div>
                     </div>
                 </div>
             </li>
         </ul>
+
+        <ul class="plain-list-horizontal">
+            <li><a href="#view1">View 1</a></li>
+            <li><a href="#view2">View 2</a></li>
+            <li><a href="#view3">View 3</a></li>
+        </ul>
+
+        <div ng-view>
+        </div>
     </div>
 
     <script src="http://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.11/require.js" data-main="js/main.js"></script>
