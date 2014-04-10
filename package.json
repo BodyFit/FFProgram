@@ -6,8 +6,16 @@
     "start": "node app.js"
   },
   "dependencies": {
-    "express": "3.5.1",
-    "ejs": "*",
+    "express": "3.4.8",
+    "connect": "*",
+    "swagger-node-express": "*",
+    "passport": "*",
+    "passport-oauth-wrap": "*",
+    "connect-ensure-login": "*",
+    "async": "*",
+    "hbs": "*",
+    "lodash": "*",
+    "express3-handlebars": "*",
     "less-middleware": "~0.1.15"
   }
 }
