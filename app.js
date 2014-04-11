@@ -32,8 +32,30 @@ if ('development' == app.get('env')) {
     app.use(express.errorHandler());
 }
 
+var users = {
+    'miro': 'pass',
+    'spiro': 'tryas'
+};
+
 app.get('/users', user.list);
-app.get('/api/list', function(req, res, err) {
+app.get('/api/login/:user/:pass/:remember', function(req, res) {
+    var user = req.params.user;
+    var pass = req.params.pass;
+    var remember = req.params.remember == 'true';
+
+    if (pass && users[user] == pass) {
+        res.json({
+            'user': user,
+            'remember': remember
+        });
+    } else {
+        res.statusCode = 401;
+        res.json({
+            'error': 'Invalid username or password!'
+        });
+    }
+});
+app.get('/api/list', function(req, res) {
     res.json([{
         'text': 'i am a beautiful butterfly',
         'value': 5

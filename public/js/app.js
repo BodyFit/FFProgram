@@ -1,8 +1,9 @@
 define(['angular',
-	'./services/index',
-	'./directives/index',
+    './services/index',
+    './directives/index',
     './controllers/index',
-    './routing/index'], function(ng) {
+    './routes'
+], function(ng) {
     'use strict';
-    return ng.module('app', ['app.controllers', 'app.services', 'app.directives', 'app.routing']);
+    return ng.module('app', ['app.controllers', 'app.services', 'app.directives', 'app.routes']);
 });

@@ -1,10 +1,10 @@
-<html>
+<html ng-controller="PageCtrl">
 
 <head>
     <meta charset="utf-8">
     <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
     <link href="/stylesheets/style.css" rel="stylesheet">
-    <title>Other title</title>
+    <title>{{title}}</title>
 </head>
 
 <body>
@@ -18,47 +18,43 @@
         </div>
     </script>
 
-    <script type="text/ng-template" id="view1-template.html">
-        <div ng-controller="View1Ctrl">
-            Hello {{name}} from view1!
+    <script type="text/ng-template" id="login-view-template.html">
+        <div>
+        <form>
+            Username: <input type="text" ng-model="user"></input>
+            Password: <input type="text" ng-model="pass"></input>
+            Remember: <input type="checkbox" ng-model="remember"></input>
+            <button ng-click="login()">Login</button>
+        </form>
+            {{result}}
         </div>
     </script>
 
-    <script type="text/ng-template" id="view2-template.html">
-        <div ng-controller="View2Ctrl">
-            Hello {{name}} from view2!
+    <script type="text/ng-template" id="preferences-template.html">
+        <div>
+            Hello {{title}}! {{page.title}}
         </div>
     </script>
 
-    <div ng-controller="TestCtrl">
-        <input ng-model="inputBox"></input>
-        <span ng-bind="defaultString"></span>
-        <span ng-bind="inputBox"></span>
-        <span ng-bind="result"></span>
-        <button ng-click="doSth()">click me!</button>
-        {{defaultString}} {{inputBox}} {{result}}
-        <button ng-click="getItems()">Get items</button>
-        <span ng-bind="checkedItems()"></span>
-        <ul class="plain-list">
-            <li ng-repeat="item in items" class="item">
-                <div class="container">
-                    <div class="background" style="background-color:red" ng-show="item.isChecked"></div>
-                    <div class="background" style="background-color:green" ng-show="!item.isChecked"></div>
-                    <div class="overlay">
-                        <div my-check-box is-checked="item.isChecked">{{item.text}}: {{item.value}}</div>
-                    </div>
-                </div>
-            </li>
-        </ul>
+    <div class="main-page">
+        <div class="page-header">
+            <h1>{{header}}</h1>
 
-        <ul class="plain-list-horizontal">
-            <li><a href="#view1">View 1</a></li>
-            <li><a href="#view2">View 2</a></li>
-            <li><a href="#view3">View 3</a></li>
-        </ul>
-
-        <div ng-view>
+            <div class="my-profile">
+                <span ng-show="!loginData.loggedIn"><a href="#/login">login</a></span>
+                <span ng-show="loginData.loggedIn">Hello {{loginData.currentUser}}! <a href="#" ng-click="logout">logout</a>?</span>
+            </div>
         </div>
+
+        <div class="main-menu">
+            <ul class="menu">
+                <li ng-repeat="item in menuItems">
+                    <a ng-href="#{{item.uri}}">Item {{item.title}}</a>
+                </li>
+            </ul>
+        </div>
+
+        <div class="page-content" ng-view></div>
     </div>
 
     <script src="http://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.11/require.js" data-main="js/main.js"></script>

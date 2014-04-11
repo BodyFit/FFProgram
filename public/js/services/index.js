@@ -1,4 +1,5 @@
 // Module loader.
 define([
-    './testService'
+    './testService',
+    './loginService'
 ], function() {});
