@@ -10,6 +10,11 @@ a {
   margin: 0;
   padding: 0;
 }
+.menu {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
 ul.plain-list-horizontal {
   list-style-type: none;
   margin: 0;
@@ -33,4 +38,38 @@ ul.plain-list-horizontal li {
 }
 .overlay {
   z-index: 10;
+}
+.page-header {
+  overflow: auto;
+}
+.page-header h1 {
+  float: left;
+  vertical-align: center;
+}
+.my-profile {
+  float: right;
+  vertical-align: center;
+}
+.main-menu {
+  display: inline-block;
+  vertical-align: top;
+  background-color: pink;
+}
+.page-content {
+  display: inline-block;
+  vertical-align: top;
+}
+.login-form {
+  width: 250px;
+}
+.login-form span {
+  display: block;
+  vertical-align: center;
+  overflow: auto;
+}
+.login-form input {
+  float: right;
+}
+.login-form button {
+  float: right;
 }

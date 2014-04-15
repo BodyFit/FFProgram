@@ -20,12 +20,12 @@
 
     <script type="text/ng-template" id="login-view-template.html">
         <div>
-        <form>
-            Username: <input type="text" ng-model="user"></input>
-            Password: <input type="text" ng-model="pass"></input>
-            Remember: <input type="checkbox" ng-model="remember"></input>
-            <button ng-click="login()">Login</button>
-        </form>
+            <form class="login-form">
+                <span>Username: <input type="text" ng-model="user"></input></span>
+                <span>Password: <input type="text" ng-model="pass"></input></span>
+                <span>Remember: <input type="checkbox" ng-model="remember"></input></span>
+                <span><button ng-click="login()">Login</button></span>
+            </form>
             {{result}}
         </div>
     </script>
@@ -42,7 +42,7 @@
 
             <div class="my-profile">
                 <span ng-show="!loginData.loggedIn"><a href="#/login">login</a></span>
-                <span ng-show="loginData.loggedIn">Hello {{loginData.currentUser}}! <a href="#" ng-click="logout">logout</a>?</span>
+                <span ng-show="loginData.loggedIn">Hello {{loginData.currentUser}}! <a href="#" ng-click="logout()">logout</a>?</span>
             </div>
         </div>
 

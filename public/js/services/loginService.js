@@ -22,6 +22,10 @@ define(['./module'], function(module) {
                             // TODO: Return false on failure
                     }
                     // TODO: Return fullfilled promise
+                },
+                logout: function() {
+                    loginData.loggedIn = false;
+                    loginData.currentUser = null;
                 }
             };
         }
