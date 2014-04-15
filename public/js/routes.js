@@ -5,11 +5,11 @@ define(['angular', 'angular-route'],
         routes.config(['$routeProvider',
             function($routeProvider) {
                 $routeProvider.when('/', {
-                    templateUrl: 'preferences-template.html',
-                    controller: 'PreferencesCtrl'
-                    // templateUrl: 'home-view-template.html',
-                    // controller: 'HomeCtrl'
+                    templateUrl: 'home-view-template.html',
+                    controller: 'HomeCtrl'
                 }).when('/login', {
+                    redirectTo: '/login/%2F'
+                }).when('/login/:path', {
                     templateUrl: 'login-view-template.html',
                     controller: 'LoginCtrl'
                 }).when('/preferences', {
@@ -23,16 +23,10 @@ define(['angular', 'angular-route'],
 
         routes.run(['$location', '$rootScope',
             function($location, $rootScope) {
-                // register listener to watch route changes
                 $rootScope.$on("$routeChangeStart", function(event, next, current) {
-                    if (!$rootScope.loginData || !$rootScope.loginData.loggedIn) {
-                        // no logged user, we should be going to #login
-                        if (next.templateUrl == "login-view-template.html") {
-                            // already going to #login, no redirect needed
-                        } else {
-                            // not going to #login, we should redirect now
-                            $location.path("/login");
-                        }
+                    if ((!$rootScope.loginData || !$rootScope.loginData.loggedIn) &&
+                        next.originalPath.indexOf('/login') != 0) {
+                        $location.path('/login/' + encodeURIComponent(next.originalPath));
                     }
                 });
             }

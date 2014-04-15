@@ -1,8 +1,6 @@
 define(['./module'], function(module) {
     module.controller('PageCtrl', ['$scope', '$rootScope', 'loginService',
         function($scope, $rootScope, loginService) {
-        	$scope.title = "Food and Fitness app :: Home";
-        	$scope.header = "Food and Fitness app / Home";
             $scope.menuItems = [{
                 'title': 'Home',
                 'uri': '/'
@@ -14,6 +12,11 @@ define(['./module'], function(module) {
             $scope.logout = function() {
                 loginService.logout();
             };
+
+            $scope.updatePageInfo = function(pageTitle) {
+                $scope.title = "Food and Fitness app :: " + pageTitle;
+                $scope.header = "Food and Fitness app / " + pageTitle;
+            }
 
             $rootScope.page = $scope;
         }

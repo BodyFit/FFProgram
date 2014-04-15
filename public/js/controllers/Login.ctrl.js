@@ -1,11 +1,14 @@
 define(['./module'], function(module) {
-    module.controller('LoginCtrl', ['$scope', 'loginService',
-        function($scope, loginService) {
+    module.controller('LoginCtrl', ['$scope', '$location', '$routeParams', 'loginService',
+        function($scope, $location, $routeParams, loginService) {
+            $scope.page.updatePageInfo('Login');
+
         	$scope.login = function() {
     			loginService
         			.login($scope.user, $scope.pass, $scope.remember)
-        			.success(function(loginResult) {
+        			.then(function(loginResult) {
         				$scope.result = loginResult;
+                        $location.path($routeParams.path);
         			});
         	}
         }
