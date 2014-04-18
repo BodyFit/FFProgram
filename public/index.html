@@ -2,7 +2,11 @@
 
 <head>
     <meta charset="utf-8">
-    <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
+<!--     <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
+    <link href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" rel="stylesheet"> -->
+    <!-- <link href="//cdnjs.cloudflare.com/ajax/libs/angular-ui/0.4.0/angular-ui.css" rel="stylesheet"> -->
+    <link href="/stylesheets/CDN/css/font-awesome.css" rel="stylesheet">
+    <link href="/stylesheets/CDN/css/bootstrap.min.css" rel="stylesheet">
     <link href="/stylesheets/style.css" rel="stylesheet">
     <title>{{title}}</title>
 </head>
@@ -30,13 +34,24 @@
         </div>
     </script>
 
-    <script type="text/ng-template" id="preferences-template.html">
+    <script type="text/ng-template" id="home-view-template.html">
         <div>
             Hello {{title}}! {{page.title}}
         </div>
     </script>
 
-    <script type="text/ng-template" id="home-view-template.html">
+    <script type="text/ng-template" id="myprofile-view-template.html">
+        <div>
+            <form>
+                <span>Name: <input type="text" ng-model="fullName"></input></span>
+                <span>Birth date: <input type="text" ng-model="birthDate"></input></span>
+                <span>Sex: <input type="text" ng-model="sex"></input></span>
+                <span>Height: <input type="text" ng-model="height"></input></span>
+            </form>
+        </div>
+    </script>
+
+    <script type="text/ng-template" id="preferences-template.html">
         <div>
             Hello {{title}}! {{page.title}}
         </div>
@@ -61,9 +76,17 @@
         </div>
 
         <div class="page-content" ng-view></div>
+        
+        <button ng-click="open()"><i class="fa fa-repeat"></i> fa-repeat</button>
+
+        <input type="text" class="form-control" datepicker-popup="yyyy/MM/dd" 
+                ng-model="dt" is-open="isDatePickerOpened" min="'2012-06-22'" max="'2015-06-22'" ng-required="true"></input>
+
     </div>
 
-    <script src="http://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.11/require.js" data-main="js/main.js"></script>
+    <script src="/js/libs/CDN/require.js" data-main="js/main.js"></script>
+
+    <!-- <script src="http://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.11/require.js" data-main="js/main.js"></script> -->
 </body>
 
 </html>

@@ -18,6 +18,10 @@ define(['./module'], function(module) {
                 $scope.header = "Food and Fitness app / " + pageTitle;
             }
 
+            $scope.open = function() {
+                $scope.isDatePickerOpened = true;
+            }
+
             $rootScope.page = $scope;
         }
     ]);
