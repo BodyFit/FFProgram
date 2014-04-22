@@ -8,7 +8,7 @@
     <link href="/stylesheets/CDN/css/font-awesome.css" rel="stylesheet">
     <link href="/stylesheets/CDN/css/bootstrap.min.css" rel="stylesheet">
     <link href="/stylesheets/style.css" rel="stylesheet">
-    <title>{{title}}</title>
+    <title>{{activeView.title}}</title>
 </head>
 
 <body>
@@ -22,36 +22,62 @@
         </div>
     </script>
 
-    <script type="text/ng-template" id="login-view-template.html">
-        <div>
-            <form class="login-form">
-                <span>Username: <input type="text" ng-model="user"></input></span>
-                <span>Password: <input type="text" ng-model="pass"></input></span>
-                <span>Remember: <input type="checkbox" ng-model="remember"></input></span>
-                <span><button ng-click="login()">Login</button></span>
-            </form>
-            {{result}}
-        </div>
+    <script type="text/ng-template" id="login-view-template.html">        
+       <form class="form-horizontal" role="form">
+           <div class="container">
+                <div class="form-group row">
+                    <label for="user-text" class="control-label col-sm-5">Username: </label>
+                    <div class="col-sm-3">
+                        <input class="form-control" type="text" ng-model="user" id="user-text"></input>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="pass-text" class="control-label col-sm-5">Username: </label>
+                    <div class="col-sm-3">
+                        <input class="form-control" type="password" ng-model="pass" id="pass-text"></input>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="remmeber-check" class="control-label col-sm-5">Remember me: </label>
+                    <div class="checkbox col-sm-1">
+                        <input type="checkbox" ng-model="remember" id="remmeber-check"></input>
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <button class="btn btn-success col-sm-offset-4 col-sm-1" ng-click="login()">Login</button>
+                    <button class="btn btn-link col-sm-offset-2 col-sm-1" ng-click="register()">Register</button>
+                </div>
+            </div>
+        </form>
     </script>
 
     <script type="text/ng-template" id="home-view-template.html">
         <div>
-            Hello {{title}}! {{page.title}}
+            Hello {{title}}! {{page.activeView.title}}
         </div>
     </script>
 
-    <script type="text/ng-template" id="myprofile-view-template.html">
+    <script type="text/ng-template" id="my-profile-view-template.html">
         <div>
             <form>
-                <span>Name: <input type="text" ng-model="fullName"></input></span>
-                <span>Birth date: <input type="text" ng-model="birthDate"></input></span>
-                <span>Sex: <input type="text" ng-model="sex"></input></span>
-                <span>Height: <input type="text" ng-model="height"></input></span>
+                <span>Name: <input class="form-control" type="text" ng-model="fullName"></input></span>
+                <label>
+                Birth date:
+                <p class="input-group">                
+                    <input type="text" class="form-control" datepicker-popup="yyyy-mm-dd" ng-model="birthDate" is-open="opened" min="minDate" max="'2015-06-22'" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" close-text="Close" />
+              <span class="input-group-btn">
+                <button class="btn btn-default" ng-click="open($event)"><i class="glyphicon glyphicon-calendar"></i></button>
+              </span>
+            </p></label>
+                <!-- <span>Birth date: <input class="form-control" type="text" ng-model="birthDate"></input></span> -->
+                <span>Sex: <input class="form-control" type="text" ng-model="sex"></input></span>
+                <span>Height: <input class="form-control" type="text" ng-model="height"></input></span>
             </form>
         </div>
     </script>
 
-    <script type="text/ng-template" id="preferences-template.html">
+    <script type="text/ng-template" id="preferences-view-template.html">
         <div>
             Hello {{title}}! {{page.title}}
         </div>
@@ -59,29 +85,22 @@
 
     <div class="main-page">
         <div class="page-header">
-            <h1>{{header}}</h1>
+            <nav class="menu">
+                <a ng-repeat="item in menuItems" ng-class="activeView == item ? 'active' : 'no-active'" ng-href="#{{item.uri}}">{{item.title}}</a>
+            </nav>
 
-            <div class="my-profile">
+            <div class="login-logout">
                 <span ng-show="!loginData.loggedIn"><a href="#/login">login</a></span>
                 <span ng-show="loginData.loggedIn">Hello {{loginData.currentUser}}! <a href="#" ng-click="logout()">logout</a>?</span>
             </div>
         </div>
 
-        <div class="main-menu">
-            <ul class="menu">
-                <li ng-repeat="item in menuItems">
-                    <a ng-href="#{{item.uri}}">Item {{item.title}}</a>
-                </li>
-            </ul>
-        </div>
-
         <div class="page-content" ng-view></div>
         
-        <button ng-click="open()"><i class="fa fa-repeat"></i> fa-repeat</button>
+        <!-- <button ng-click="open()"><i class="fa fa-repeat"></i> fa-repeat</button> -->
 
-        <input type="text" class="form-control" datepicker-popup="yyyy/MM/dd" 
-                ng-model="dt" is-open="isDatePickerOpened" min="'2012-06-22'" max="'2015-06-22'" ng-required="true"></input>
-
+<!--         <input type="text" class="form-control" datepicker-popup="yyyy/MM/dd" 
+                ng-model="dt" is-open="isDatePickerOpened" min="'2012-06-22'" max="'2015-06-22'" ng-required="true"></input> -->
     </div>
 
     <script src="/js/libs/CDN/require.js" data-main="js/main.js"></script>

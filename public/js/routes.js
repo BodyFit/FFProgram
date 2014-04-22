@@ -12,8 +12,11 @@ define(['angular', 'angular-route'],
                 }).when('/login/:path', {
                     templateUrl: 'login-view-template.html',
                     controller: 'LoginCtrl'
+                }).when('/my-profile', {
+                    templateUrl: 'my-profile-view-template.html',
+                    controller: 'MyProfileCtrl'
                 }).when('/preferences', {
-                    templateUrl: 'preferences-template.html',
+                    templateUrl: 'preferences-view-template.html',
                     controller: 'PreferencesCtrl'
                 }).otherwise({
                     redirectTo: '/'

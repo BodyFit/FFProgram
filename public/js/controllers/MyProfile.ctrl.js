@@ -1,5 +1,5 @@
 define(['./module'], function(module) {
-    module.controller('HomeCtrl', ['$scope',
+    module.controller('MyProfileCtrl', ['$scope',
         function($scope) {
         }
     ]);
