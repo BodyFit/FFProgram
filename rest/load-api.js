@@ -3,13 +3,7 @@ var swagger = require("swagger-node-express"),
     api = express(),
     fs = require("fs"),
     path = require("path"),
-    async = require("async"),
-    wrap = require('passport').authenticate('WRAP'),
-    ignorePaths = new RegExp("^/docs|/metadata|/api-docs", "i");
-
-function isShared(req) {
-    return req.headers && req.headers.referer && req.headers.referer.indexOf("public") > -1;
-}
+    async = require("async");
 
 //api.use(function (req, res, next) {
 //    if ((req.isAuthenticated && req.isAuthenticated()) || ignorePaths.test(req.url) || isShared(req)) {
@@ -36,8 +30,8 @@ module.exports = function (app) {
             }
             done();
         }, function () {
-            swagger.configure(appConfig.url + '/api', '0.1');
-            api.use("/docs", express.static(path.resolve(__dirname, "..", "client", "swagger")));
+            swagger.configure('/api', '0.1');
+            api.use("/docs", express.static(path.resolve(__dirname, "..", "public", "swagger")));
             api.get("/metadata", function (req, res) {
                 res.redirect("docs");
             });

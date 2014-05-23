@@ -10,7 +10,6 @@
     "connect": "*",
     "swagger-node-express": "*",
     "passport": "*",
-    "passport-oauth-wrap": "*",
     "connect-ensure-login": "*",
     "async": "*",
     "hbs": "*",

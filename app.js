@@ -35,15 +35,9 @@ if ('development' == app.get('env')) {
 }
 
 app.get('/users', user.list);
-app.get('/api/list', function(req, res, err) {
-    res.json([{
-        'text': 'i am a beautiful butterfly',
-        'value': 5
-    }, {
-        'text': 'that is so nice',
-        'value': 2
-    }]);
-});
+
+require("./rest/load-api")(app);
+
 app.use(express.static(__dirname + '/public'));
 
 http.createServer(app).listen(app.get('port'), function() {
