@@ -15,6 +15,6 @@
     "hbs": "*",
     "lodash": "*",
     "express3-handlebars": "*",
-    "less-middleware": "~0.1.15"
+    "entree": "~0.1.13"
   }
 }

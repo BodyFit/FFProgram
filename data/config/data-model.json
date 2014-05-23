@@ -1,0 +1,19 @@
+{
+    "defaultConnection": "everlive",
+    "connections": {
+        "everlive": {
+            "provider": "everlive",
+            "options": {
+                "connStr": "http://api.everlive.com/v1/ZsKEbGeFrDPsggLR/"
+            }
+        }
+    },
+    "collections": [
+        {
+            "name": "Users"
+        },
+        {
+            "name": "profiles"
+        }
+    ]
+}

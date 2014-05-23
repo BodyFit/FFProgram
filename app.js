@@ -1,45 +1,47 @@
-/**
- * Module dependencies.
- */
+var express = require('express'),
+  entree = require('entree'),
+  async = require('async'),
+  routes = require('./routes'),
+  user = require('./routes/user'),
+  http = require('http'),
+  path = require('path'),
+  apiInit = require("./rest/load-api");
 
-var express = require('express');
-var routes = require('./routes');
-var user = require('./routes/user');
-var http = require('http');
-var path = require('path');
-
+global.userId = "20bc6670-e2b6-11e3-a5cf-355388f1026f";
 var app = express();
 
-// all environments
-app.set('port', process.env.PORT || 3000);
-app.set("view engine", "html");
-app.set("view options", { layout: false });
-app.set("views", path.join(__dirname, 'views'));
-app.engine("html", require("hbs").__express);
-app.use(express.favicon());
-app.use(express.logger('dev'));
-app.use(express.json());
-app.use(express.urlencoded());
-app.use(express.methodOverride());
-app.use(express.cookieParser('your secret here'));
-app.use(express.session());
-app.use(app.router);
-app.use(require('less-middleware')({
-    src: path.join(__dirname, 'public')
-}));
-app.use(express.static(path.join(__dirname, 'public')));
+async.series([
+  function (done) {
+    entree.init(done);
+  }],
+  function(err) {
+    app.set('port', process.env.PORT || 3000);
+    app.set("view engine", "html");
+    app.set("view options", { layout: false });
+    app.set("views", path.join(__dirname, 'views'));
+    app.engine("html", require("hbs").__express);
 
-// development only
-if ('development' == app.get('env')) {
-    app.use(express.errorHandler());
-}
+    app.use(express.json())
+       .use(express.urlencoded())
+       .use(express.methodOverride())
+       .use(express.bodyParser())
+       .use(express.cookieParser('your secret here'))
+       .use(express.session())
+       .use(app.router)
+       .use(express.static(path.join(__dirname, 'public')));
 
-app.get('/users', user.list);
+  // development only
+    if ('development' == app.get('env')) {
+      app.use(express.errorHandler());
+    }
 
-require("./rest/load-api")(app);
+    apiInit(app);
 
-app.use(express.static(__dirname + '/public'));
+    app.on('close', function () {
+      entree.dispose();
+    });
 
-http.createServer(app).listen(app.get('port'), function() {
-    console.log('Express server listening on port ' + app.get('port'));
+    http.createServer(app).listen(app.get('port'), function () {
+      console.log('Express server listening on port ' + app.get('port'));
+    });
 });
