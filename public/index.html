@@ -22,19 +22,19 @@
         </div>
     </script>
 
-    <script type="text/ng-template" id="login-view-template.html">        
-       <form class="form-horizontal" role="form">
+    <script type="text/ng-template" id="login-view-template.html">
+       <form class="form-horizontal" role="form" ng-submit="login()">
            <div class="container">
                 <div class="form-group row">
                     <label for="user-text" class="control-label col-sm-5">Username: </label>
                     <div class="col-sm-3">
-                        <input class="form-control" type="text" ng-model="user" id="user-text"></input>
+                        <input class="form-control" type="text" ng-model="user" id="user-text" ng-required="true"></input>
                     </div>
                 </div>
                 <div class="form-group row">
                     <label for="pass-text" class="control-label col-sm-5">Username: </label>
                     <div class="col-sm-3">
-                        <input class="form-control" type="password" ng-model="pass" id="pass-text"></input>
+                        <input class="form-control" type="password" ng-model="pass" id="pass-text" ng-required="true"></input>
                     </div>
                 </div>
                 <div class="form-group row">
@@ -45,8 +45,8 @@
                 </div>
 
                 <div class="form-group row">
-                    <button class="btn btn-success col-sm-offset-4 col-sm-1" ng-click="login()">Login</button>
-                    <button class="btn btn-link col-sm-offset-2 col-sm-1" ng-click="register()">Register</button>
+                    <button type="button" class="btn btn-link col-sm-offset-4 col-sm-1" ng-click="register()">Register</button>
+                    <button type="submit" class="btn btn-success col-sm-offset-2 col-sm-1">Login</button>
                 </div>
             </div>
         </form>
@@ -59,22 +59,46 @@
     </script>
 
     <script type="text/ng-template" id="my-profile-view-template.html">
-        <div>
-            <form>
-                <span>Name: <input class="form-control" type="text" ng-model="fullName"></input></span>
-                <label>
-                Birth date:
-                <p class="input-group">                
-                    <input type="text" class="form-control" datepicker-popup="yyyy-mm-dd" ng-model="birthDate" is-open="opened" min="minDate" max="'2015-06-22'" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" close-text="Close" />
-              <span class="input-group-btn">
-                <button class="btn btn-default" ng-click="open($event)"><i class="glyphicon glyphicon-calendar"></i></button>
-              </span>
-            </p></label>
-                <!-- <span>Birth date: <input class="form-control" type="text" ng-model="birthDate"></input></span> -->
-                <span>Sex: <input class="form-control" type="text" ng-model="sex"></input></span>
-                <span>Height: <input class="form-control" type="text" ng-model="height"></input></span>
-            </form>
-        </div>
+        <form class="form-horizontal" role="form" ng-submit="save()">
+            <div class="container">
+                <div class="form-group row">
+                    <label for="name-text" class="control-label col-sm-3">Full name: </label>
+                    <div class="col-sm-5">
+                        <input class="form-control" type="text" ng-model="name" id="name-text" placeholder="John Doe"></input>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="birth-date-text" class="control-label col-sm-3">Birth date: </label>
+                    <div class="col-sm-3">
+                        <p class="input-group">
+                            <input type="text" class="form-control" datepicker-popup="yyyy-mm-dd" ng-model="birthDate" is-open="opened" min="1900-01-01" max="'2015-01-01'" ng-required="true" close-text="Close" id="birth-date-text"></input>
+                            <span class="input-group-btn">
+                                <button type="button" class="btn btn-default" ng-click="open($event)"><i class="glyphicon glyphicon-calendar"></i></button>
+                            </span>
+                        </p>
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label for="height-text" class="control-label col-sm-3">Height: </label>
+                    <div class="col-sm-2">
+                        <input class="form-control" type="number" ng-model="height" id="height-text" ng-required="true"></input>
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label for="sex-buttons" class="control-label col-sm-3">Sex: </label>
+                    <div class="col-sm-3 btn-group from-control" id="sex-buttons" ng-validate="{ sex: 'validateSex($value)' }">
+                            <button type="button" class="btn btn-default" ng-model="sex" btn-radio="'male'">Male</button>
+                            <button type="button" class="btn btn-default" ng-model="sex" btn-radio="'female'">Female</button>
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <button type="submit" class="btn btn-primary col-sm-offset-7 col-sm-1">Save</button>
+                </div>
+            </div>
+        </form>
     </script>
 
     <script type="text/ng-template" id="preferences-view-template.html">
@@ -96,13 +120,6 @@
         </div>
 
         <div class="page-content" ng-view></div>
-        
-        <!-- <button ng-click="open()"><i class="fa fa-repeat"></i> fa-repeat</button> -->
-
-<!--         <input type="text" class="form-control" datepicker-popup="yyyy/MM/dd" 
-                ng-model="dt" is-open="isDatePickerOpened" min="'2012-06-22'" max="'2015-06-22'" ng-required="true"></input> -->
-    </div>
-
     <script src="/js/libs/CDN/require.js" data-main="js/main.js"></script>
 
     <!-- <script src="http://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.11/require.js" data-main="js/main.js"></script> -->

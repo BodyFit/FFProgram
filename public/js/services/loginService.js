@@ -2,7 +2,7 @@ define(['./module'], function(module) {
     module.factory('loginService', ['$http', '$rootScope', '$q',
         function($http, $rootScope, $q) {
             var loginData = {
-                'loggedIn': false,
+                'loggedIn': true,
                 'currentUser': null
             };
             $rootScope.loginData = loginData;
