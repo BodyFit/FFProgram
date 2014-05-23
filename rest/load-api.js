@@ -3,14 +3,16 @@ var swagger = require("swagger-node-express"),
     api = express(),
     fs = require("fs"),
     path = require("path"),
+    auth = require('passport').authenticate('local'),
     async = require("async");
 
-//api.use(function (req, res, next) {
-//    if ((req.isAuthenticated && req.isAuthenticated()) || ignorePaths.test(req.url) || isShared(req)) {
-//        return next();
-//    }
-//    wrap(req, res, next);
-//});
+api.use(function (req, res, next) {
+    if (req.isAuthenticated && req.isAuthenticated()) {
+        return next();
+    }
+    //auth(req, res, next);
+    next();
+});
 
 module.exports = function (app) {
     app.use("/api", api);

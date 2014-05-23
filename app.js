@@ -1,10 +1,13 @@
 var express = require('express'),
   entree = require('entree'),
   async = require('async'),
+  passport = require('passport'),
   routes = require('./routes'),
   user = require('./routes/user'),
   http = require('http'),
   path = require('path'),
+  request = require('request'),
+  LocalStrategy = require('passport-local').Strategy;
   apiInit = require("./rest/load-api");
 
 global.userId = "20bc6670-e2b6-11e3-a5cf-355388f1026f";
@@ -25,12 +28,37 @@ async.series([
        .use(express.urlencoded())
        .use(express.methodOverride())
        .use(express.bodyParser())
-       .use(express.cookieParser('your secret here'))
+       .use(express.cookieParser('035E2402-1E6E-4BAD-B516-5B180CA35626'))
        .use(express.session())
        .use(app.router)
+       .use(passport.initialize())
+       .use(passport.session())
        .use(express.static(path.join(__dirname, 'public')));
 
-  // development only
+    passport.use(new LocalStrategy(
+      function(username, password, done) {
+          request.post(
+            'http://api.everlive.com/v1/ZsKEbGeFrDPsggLR/oauth/token',
+            { form: { username: username, password: password, grant_type: "password" } },
+            function (error, response, body) {
+              if (!error && response.statusCode == 200) {
+                return done(null, body);
+              }
+              return done(null, false);
+            }
+      );
+    }));
+
+    passport.serializeUser(function(user, done) {
+      done(null, user.id);
+    });
+
+    passport.deserializeUser(function(id, done) {
+      entree.Users.get(id, function(err, user) {
+        done(err, user);
+      });
+    });
+
     if ('development' == app.get('env')) {
       app.use(express.errorHandler());
     }

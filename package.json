@@ -15,6 +15,8 @@
     "hbs": "*",
     "lodash": "*",
     "express3-handlebars": "*",
-    "entree": "~0.1.13"
+    "entree": "~0.1.13",
+    "passport-local": "~1.0.0",
+    "request": "~2.36.0"
   }
 }
