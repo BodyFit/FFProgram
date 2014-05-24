@@ -3,7 +3,7 @@ var swagger = require("swagger-node-express"),
   api = express(),
   fs = require("fs"),
   path = require("path"),
-  auth = require('passport').authenticate('bearer'),
+  auth = require('passport').authenticate('bearer', { session: false }),
   async = require("async");
 
 api.use(function (req, res, next) {
