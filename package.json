@@ -17,6 +17,7 @@
     "express3-handlebars": "*",
     "entree": "~0.1.13",
     "request": "~2.36.0",
-    "passport-http-bearer": "~1.0.1"
+    "passport-http-bearer": "~1.0.1",
+    "needle": "~0.7.1"
   }
 }

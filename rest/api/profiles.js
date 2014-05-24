@@ -1,46 +1,79 @@
-var entree = require("entree");
+var request = require('request'),
+  entree = require("entree"),
+needle = require("needle");
 
 exports.init = function (swagger) {
   var getProfile = {
     "spec": {
-      "description": "Operations about profiles",
-      "path": "/profiles/{userId}",
-      "notes": "Returns a profile based on ID",
+      "description": "Returns the profile for the current user.",
+      "path": "/profile",
+      "notes": "Returns the profile for the current user.",
       "method": "GET",
-      "params": [swagger.pathParam("userId", "ID of user that needs to be fetched", "string")],
-      "responseClass": "Prototype",
-      "errorResponses": [swagger.errors.invalid("id"), swagger.errors.notFound("prototype")],
-      "nickname": "getProfileById"
+      "responseClass": "Profile",
+      "nickname": "getProfile"
     },
     "action": function (req, res) {
-      var id = req.params.id;
-      if (!id) {
-        throw swagger.errors.invalid("id");
-      }
-      entree.profiles.selectOne({Owner: id}, function (err, item) {
-        res.json(item);
-      });
+      var userId = req.user.Id;
+      needle.request("get",
+        'http://api.everlive.com/v1/ZsKEbGeFrDPsggLR/profiles/',
+        {
+          json: true,
+          headers: { "Authorization": req.headers.authorization,
+            "X-Everlive-Filter" : JSON.stringify({ "Owner" : req.user.id })}
+        },
+        function (error, response) {
+          res.json(response.body.Result[0]);
+        });
+    }
+  };
+
+  var addProfile = {
+    "spec": {
+      "description": "Set a profile for the current user",
+      "path": "/profile",
+      "notes": "Set a profile for the current user",
+      "method": "POST",
+      "responseClass": "Profile",
+      "nickname": "addProfile"
+    },
+    "action": function (req, res) {
+      needle.request("post",
+        'http://api.everlive.com/v1/ZsKEbGeFrDPsggLR/profiles',
+        req.body,
+        {
+          json: true,
+          headers: { "Authorization": req.headers.authorization}
+        },
+        function (error, response, body) {
+            res.json(body.Result);
+        });
     }
   };
 
   var updateProfile = {
     "spec": {
-      "description": "Operations about prototypes",
-      "path": "/profiles",
-      "notes": "Returns a profile based on ID",
-      "summary": "Find prototype by ID",
+      "description": "Set a profile for the current user",
+      "path": "/profile/{id}",
+      "notes": "Set a profile for the current user",
       "method": "PUT",
-      "params": [swagger.pathParam("id", "ID of prototype that needs to be fetched", "string")],
-      "responseClass": "Prototype",
-      "errorResponses": [swagger.errors.invalid("id"), swagger.errors.notFound("prototype")],
-      "nickname": "getPrototypeById"
+      "responseClass": "Profile",
+      "nickname": "addProfile"
     },
     "action": function (req, res) {
-      entree.profiles.upsert(req.body, function (err, item) {
-        res.json(item);
-      });
+      needle.request("put",
+        'http://api.everlive.com/v1/ZsKEbGeFrDPsggLR/profiles/' + req.params.id,
+        req.body,
+        {
+          json: true,
+          headers: { "Authorization": req.headers.authorization}
+        },
+        function (error, response, body) {
+          res.json(body);
+        });
     }
   };
 
   swagger.addGet(getProfile);
+  swagger.addPost(addProfile);
+  swagger.addPut(updateProfile);
 };

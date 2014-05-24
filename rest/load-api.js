@@ -4,12 +4,14 @@ var swagger = require("swagger-node-express"),
   fs = require("fs"),
   path = require("path"),
   auth = require('passport').authenticate('bearer', { session: false }),
-  async = require("async");
+  async = require("async"),
+  ignorePaths = new RegExp("^/docs|/metadata|/api-docs", "i");
 
 api.use(function (req, res, next) {
-  if (req.isAuthenticated && req.isAuthenticated()) {
+  if ((req.isAuthenticated && req.isAuthenticated()) || ignorePaths.test(req.url)) {
     return next();
   }
+
   auth(req, res, next);
 });
 
