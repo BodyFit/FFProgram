@@ -7,7 +7,8 @@ var express = require('express'),
   http = require('http'),
   path = require('path'),
   request = require('request'),
-  LocalStrategy = require('passport-local').Strategy;
+  LocalStrategy = require('passport-local').Strategy,
+  OAuthStrategy = require('passport-oauth').OAuthStrategy,
   apiInit = require("./rest/load-api");
 
 global.userId = "20bc6670-e2b6-11e3-a5cf-355388f1026f";
