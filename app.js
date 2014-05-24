@@ -8,17 +8,17 @@ var express = require('express'),
   path = require('path'),
   request = require('request'),
   LocalStrategy = require('passport-local').Strategy,
-  OAuthStrategy = require('passport-oauth').OAuthStrategy,
+  BearerStrategy = require('passport-http-bearer').Strategy,
   apiInit = require("./rest/load-api");
 
 global.userId = "20bc6670-e2b6-11e3-a5cf-355388f1026f";
 var app = express();
 
 async.series([
-  function (done) {
-    entree.init(done);
-  }],
-  function(err) {
+    function (done) {
+      entree.init(done);
+    }],
+  function (err) {
     app.set('port', process.env.PORT || 3000);
     app.set("view engine", "html");
     app.set("view options", { layout: false });
@@ -26,38 +26,38 @@ async.series([
     app.engine("html", require("hbs").__express);
 
     app.use(express.json())
-       .use(express.urlencoded())
-       .use(express.methodOverride())
-       .use(express.bodyParser())
-       .use(express.cookieParser('035E2402-1E6E-4BAD-B516-5B180CA35626'))
-       .use(express.session())
-       .use(app.router)
-       .use(passport.initialize())
-       .use(passport.session())
-       .use(express.static(path.join(__dirname, 'public')));
+      .use(express.urlencoded())
+      .use(express.methodOverride())
+      .use(express.bodyParser())
+      .use(express.cookieParser('035E2402-1E6E-4BAD-B516-5B180CA35626'))
+      .use(express.session())
+      .use(app.router)
+      .use(passport.initialize())
+      .use(passport.session())
+      .use(express.static(path.join(__dirname, 'public')));
 
-    passport.use(new LocalStrategy(
-      function(username, password, done) {
-        request.post(
-          'http://api.everlive.com/v1/your-api-key-here/Users/me',
-          { form: { "Authorization" : "Bearer your-access-token-here" }},
+    passport.use(new BearerStrategy(
+      function (token, done) {
+        request.get(
+          'http://api.everlive.com/v1/ZsKEbGeFrDPsggLR/Users/me',
+          { headers: { "Authorization": "Bearer " + token} },
           function (error, response, body) {
             if (!error && response.statusCode == 200) {
-              res.send(body);
+              done(null, JSON.parse(body).Result, { scope: 'read' });
             }
             else {
-              res.statusCode = 401;
-              res.end();
+              done(null, false);
             }
           });
-    }));
+      }
+    ));
 
-    passport.serializeUser(function(user, done) {
-      done(null, user.id);
+    passport.serializeUser(function (user, done) {
+      done(null, user.Id);
     });
 
-    passport.deserializeUser(function(id, done) {
-      entree.Users.get(id, function(err, user) {
+    passport.deserializeUser(function (id, done) {
+      entree.Users.get(id, function (err, user) {
         done(err, user);
       });
     });
@@ -91,4 +91,4 @@ async.series([
     http.createServer(app).listen(app.get('port'), function () {
       console.log('Express server listening on port ' + app.get('port'));
     });
-});
+  });
