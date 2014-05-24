@@ -37,16 +37,18 @@ async.series([
 
     passport.use(new LocalStrategy(
       function(username, password, done) {
-          request.post(
-            'http://api.everlive.com/v1/ZsKEbGeFrDPsggLR/oauth/token',
-            { form: { username: username, password: password, grant_type: "password" } },
-            function (error, response, body) {
-              if (!error && response.statusCode == 200) {
-                return done(null, body);
-              }
-              return done(null, false);
+        request.post(
+          'http://api.everlive.com/v1/your-api-key-here/Users/me',
+          { form: { "Authorization" : "Bearer your-access-token-here" }},
+          function (error, response, body) {
+            if (!error && response.statusCode == 200) {
+              res.send(body);
             }
-      );
+            else {
+              res.statusCode = 401;
+              res.end();
+            }
+          });
     }));
 
     passport.serializeUser(function(user, done) {
@@ -64,6 +66,22 @@ async.series([
     }
 
     apiInit(app);
+
+    app.post("/auth", function (req, res) {
+      var options = req.body;
+      request.post(
+        'http://api.everlive.com/v1/ZsKEbGeFrDPsggLR/oauth/token',
+        { form: { username: options.username, password: options.password, grant_type: "password" } },
+        function (error, response, body) {
+          if (!error && response.statusCode == 200) {
+            res.send(body);
+          }
+          else {
+            res.statusCode = 401;
+            res.end();
+          }
+        });
+    })
 
     app.on('close', function () {
       entree.dispose();

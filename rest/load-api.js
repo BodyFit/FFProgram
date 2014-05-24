@@ -11,7 +11,7 @@ api.use(function (req, res, next) {
         return next();
     }
     //auth(req, res, next);
-    next();
+  next();
 });
 
 module.exports = function (app) {
