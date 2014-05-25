@@ -11,7 +11,7 @@ function _getProfile(userId, token, done) {
         "X-Everlive-Filter": JSON.stringify({ "Owner": userId })}
     },
     function (error, response) {
-      done(response.body.Result[0]);
+      done(response.body.Result[0] || {});
     });
 };
 
@@ -28,7 +28,7 @@ exports.init = function (swagger) {
     "action": function (req, res) {
       var userId = req.user.Id;
       _getProfile(userId, req.headers.authorization, function (profile) {
-        res.json(profile || {});
+        res.json(profile);
       })
     }
   };
@@ -72,12 +72,12 @@ exports.init = function (swagger) {
       _getProfile(req.user.Id, token, function (profile) {
         var method, url;
         _.extend(profile, updatedProfile);
-        if (profile) {
+        if (profile.Id) {
           method = "put";
           url = 'http://api.everlive.com/v1/ZsKEbGeFrDPsggLR/profiles/' + profile.Id;
         }
         else {
-          method = "put";
+          method = "post";
           url = 'http://api.everlive.com/v1/ZsKEbGeFrDPsggLR/profiles/';
         }
 

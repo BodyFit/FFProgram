@@ -1,7 +1,7 @@
 var async = require("async");
 
 exports.init = function (swagger) {
-    var getProgram = {
+    var createProgram = {
         "spec": {
             "description": "Operations about prototypes",
             "path": "/programs/{id}",
@@ -14,13 +14,9 @@ exports.init = function (swagger) {
             "nickname": "getPrototypeById"
         },
         "action": function (req, res) {
-            var id = req.params.id;
-            if (!id) {
-                throw swagger.errors.invalid("id");
-            }
-            res.end("Program");
+            res.end();
         }
     };
 
-    swagger.addGet(getProgram);
+    swagger.addGet(createProgram);
 };
