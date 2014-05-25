@@ -5,32 +5,30 @@
     "tags": ["increase", "fat"]
   },
   "program": {
-    "program": {
-      "general": {
-        "p": 1.5,
-        "c": 5,
-        "f": "15%"
-      },
-      "adapt": [
-        {
-          "delta": [1, 3],
-          "general": {
-            "c": 6
-          }
-        },
-        {
-          "delta": [1, 3],
-          "general": {
-            "c": 7
-          }
-        },
-        {
-          "delta": [1, 3],
-          "general": {
-            "c": 8
-          }
+    "general": {
+      "p": 1.5,
+      "c": 5,
+      "f": "15%"
+    },
+    "adapt": [
+      {
+        "delta": [1, 3],
+        "general": {
+          "c": 6
         }
-      ]
-    }
+      },
+      {
+        "delta": [1, 3],
+        "general": {
+          "c": 7
+        }
+      },
+      {
+        "delta": [1, 3],
+        "general": {
+          "c": 8
+        }
+      }
+    ]
   }
 }
