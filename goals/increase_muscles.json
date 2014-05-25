@@ -1,0 +1,41 @@
+{
+  "goal": {
+    "id": 4,
+    "description": "Повишаване на чиста мускулна маса.",
+    "tags": ["increase", "training", "muscles"]
+  },
+  "program": {
+    "general": {
+      "p": 2.2,
+      "c": 4,
+      "f": "10%"
+    },
+    "adapt": [
+      {
+        "delta": [1, 2],
+        "general": {
+          "c": 5
+        }
+      },
+      {
+        "delta": [0.5, 2],
+        "general": {
+          "c": 6
+        }
+      },
+      {
+        "delta": [0.5, 2],
+        "general": {
+          "c": 7
+        }
+      },
+      {
+        "delta": [0.5, 2],
+        "general": {
+          "c": 8
+        }
+      }
+    ],
+    "training": true
+  }
+}

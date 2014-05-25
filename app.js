@@ -4,8 +4,9 @@ var express = require('express'),
   user = require('./routes/user'),
   http = require('http'),
   path = require('path'),
-  apiInit = require("./rest/load-api"),
-  authInit = require("./auth");
+  apiInit = require("./server/load-api"),
+  authInit = require("./auth"),
+  pmInit = require("./server/programManager").init;
 
 global.userId = "20bc6670-e2b6-11e3-a5cf-355388f1026f";
 var app = express();
@@ -36,6 +37,7 @@ async.series([
 
     authInit(app);
     apiInit(app);
+    pmInit();
 
     app.on('close', function () {
       entree.dispose();
