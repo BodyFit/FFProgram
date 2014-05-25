@@ -23,7 +23,7 @@ function _getBiometrics(userId, token, done) {
         "X-Everlive-Sort" : JSON.stringify({"CreatedAt": -1})
     },
     function (error, response) {
-      done(response.body.Result[0] || {});
+      done(response.body.Result || []);
     });
 };
 

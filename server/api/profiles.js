@@ -111,9 +111,28 @@ exports.init = function (swagger) {
 
   var getBiometrics = {
     "spec": {
-      "description": "Add biometrics for the current user",
+      "description": "Get current biometrics for the current user",
       "path": "/biometrics",
-      "notes": "Add biometrics for the current user",
+      "notes": "Get current biometrics for the current user",
+      "method": "GET",
+      "responseClass": "Biometrics",
+      "nickname": "addBiometrics"
+    },
+    "action": function (req, res) {
+      var userId = req.user.Id,
+        token = req.headers.authorization;
+
+      pm.getBiometrics(userId, token, function (biom) {
+        res.json(biom[0]);
+      });
+    }
+  };
+
+  var getHistoryBiometrics = {
+    "spec": {
+      "description": "Get history biometrics",
+      "path": "/biometrics/history",
+      "notes": "Get history biometrics",
       "method": "GET",
       "responseClass": "Biometrics",
       "nickname": "addBiometrics"
@@ -134,4 +153,5 @@ exports.init = function (swagger) {
 
   swagger.addPost(addBiometrics);
   swagger.addGet(getBiometrics);
+  swagger.addGet(getHistoryBiometrics);
 };

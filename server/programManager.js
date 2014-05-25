@@ -47,7 +47,6 @@ function getProgram(id, profile) {
 }
 
 function readGoals() {
-  //var fullDir = path.join(__dirname, dir);
   fs.readdir(dir, function (err, files) {
     async.each(files, function (file, done) {
       var f = dir + '/' + file;
