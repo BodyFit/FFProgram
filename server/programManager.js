@@ -37,7 +37,7 @@ function getProgram(id, profile) {
     fats = [];
 
   for (var i = 0; i < 7; i++) {
-    fats[i] = fatPercents * weight * (carbs[i] + proteins[i]);
+    fats[i] = fatPercents * (carbs[i] + proteins[i]);
   }
   return {
     carbs: carbs,
