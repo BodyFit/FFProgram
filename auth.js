@@ -1,5 +1,6 @@
 var needle = require('needle'),
   entree = require('entree'),
+  _ = require('lodash'),
   passport = require('passport'),
   BearerStrategy = require('passport-http-bearer').Strategy;
 
@@ -15,7 +16,7 @@ module.exports = function (app) {
         { headers: { "Authorization": "Bearer " + token} },
         function (error, response, body) {
           if (!error && response.statusCode == 200) {
-            done(null, JSON.parse(body).Result, { scope: 'read' });
+            done(null, body.Result, { scope: 'read' });
           }
           else {
             done(null, false);
@@ -35,18 +36,14 @@ module.exports = function (app) {
   });
 
   app.post("/auth", function (req, res) {
-    var options = req.body;
+    var options = _.clone(req.body);
+    options.grant_type = "password";
     needle.post(
       'http://api.everlive.com/v1/ZsKEbGeFrDPsggLR/oauth/token',
-      { form: { username: options.username, password: options.password, grant_type: "password" } },
+      options,
       function (error, response, body) {
-        if (!error && response.statusCode == 200) {
-          res.send(body);
-        }
-        else {
-          res.statusCode = 401;
-          res.end();
-        }
+        res.statusCode = response.statusCode;
+        res.send(body);
       });
   });
 
