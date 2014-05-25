@@ -1,6 +1,6 @@
 var entree = require("entree"),
   _ = require("lodash"),
-  _getProfile = require("../profileManager").getProfile,
+  pm = require("../profileManager"),
   needle = require("needle");
 
 exports.init = function (swagger) {
@@ -15,9 +15,9 @@ exports.init = function (swagger) {
     },
     "action": function (req, res) {
       var userId = req.user.Id;
-      _getProfile(userId, req.headers.authorization, function (profile) {
+      pm.getProfile(userId, req.headers.authorization, function (profile) {
         res.json(profile);
-      })
+      });
     }
   };
 
@@ -57,7 +57,7 @@ exports.init = function (swagger) {
       var updatedProfile = req.body,
         token = req.headers.authorization;
 
-      _getProfile(req.user.Id, token, function (profile) {
+      pm.getProfile(req.user.Id, token, function (profile) {
         var method, url;
         _.extend(profile, updatedProfile);
         if (profile.Id) {
@@ -83,7 +83,55 @@ exports.init = function (swagger) {
     }
   };
 
+  var addBiometrics = {
+    "spec": {
+      "description": "Add biometrics for the current user",
+      "path": "/biometrics",
+      "notes": "Add biometrics for the current user",
+      "method": "POST",
+      "responseClass": "Biometrics",
+      "nickname": "addBiometrics"
+    },
+    "action": function (req, res) {
+      var biometrics = req.body,
+        token = req.headers.authorization;
+
+      needle.post(
+        "http://api.everlive.com/v1/ZsKEbGeFrDPsggLR/biometrics/",
+        biometrics,
+        {
+          json: true,
+          headers: { "Authorization": token}
+        },
+        function (error, response, body) {
+          res.json(body.Result);
+        });
+    }
+  };
+
+  var getBiometrics = {
+    "spec": {
+      "description": "Add biometrics for the current user",
+      "path": "/biometrics",
+      "notes": "Add biometrics for the current user",
+      "method": "GET",
+      "responseClass": "Biometrics",
+      "nickname": "addBiometrics"
+    },
+    "action": function (req, res) {
+      var userId = req.user.Id,
+        token = req.headers.authorization;
+
+      pm.getBiometrics(userId, token, function (biom) {
+        res.json(biom);
+      });
+    }
+  };
+
   swagger.addGet(getProfile);
   swagger.addPost(addProfile);
   swagger.addPut(updateProfile);
+
+  swagger.addPost(addBiometrics);
+  swagger.addGet(getBiometrics);
 };
