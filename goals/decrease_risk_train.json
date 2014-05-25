@@ -2,7 +2,7 @@
   "goal": {
     "id": 3,
     "description": "Максимално понижаване на теглото с ризк от загуба на мускулна маса с тренировки.",
-    "tags": ["decrease", "training", "muscles"]
+    "tags": ["decrease", "training"]
   },
   "program": {
     "general": {

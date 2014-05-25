@@ -5,7 +5,6 @@
     "tags": ["decrease"]
   },
   "program": {
-    "goal": "decrease",
     "general": {
       "p": 2.2,
       "c": [1.5, 1, 0, 1.5, 1, 0, 1],

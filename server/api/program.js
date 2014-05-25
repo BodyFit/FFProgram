@@ -15,7 +15,8 @@ exports.init = function (swagger) {
       "nickname": "getPrototypeById"
     },
     "action": function (req, res) {
-
+      var program = req.params.program;
+      res.json(pm.programs[program]);
     }
   };
 
