@@ -1,5 +1,5 @@
 var entree = require("entree"),
-  request = require('request');
+  needle = require('needle');
 
 exports.init = function (swagger) {
   var userMe = {
@@ -12,7 +12,7 @@ exports.init = function (swagger) {
       "nickname": "getMe"
     },
     "action": function (req, res) {
-      request.get(
+      needle.get(
         'http://api.everlive.com/v1/ZsKEbGeFrDPsggLR/Users/me',
         { headers: { "Authorization": req.headers.authorization} },
         function (error, response, body) {

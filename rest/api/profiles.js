@@ -1,6 +1,5 @@
-var request = require('request'),
-  entree = require("entree"),
-needle = require("needle");
+var entree = require("entree"),
+  needle = require("needle");
 
 exports.init = function (swagger) {
   var getProfile = {
@@ -19,7 +18,7 @@ exports.init = function (swagger) {
         {
           json: true,
           headers: { "Authorization": req.headers.authorization,
-            "X-Everlive-Filter" : JSON.stringify({ "Owner" : req.user.id })}
+            "X-Everlive-Filter": JSON.stringify({ "Owner": req.user.id })}
         },
         function (error, response) {
           res.json(response.body.Result[0]);
@@ -45,7 +44,7 @@ exports.init = function (swagger) {
           headers: { "Authorization": req.headers.authorization}
         },
         function (error, response, body) {
-            res.json(body.Result);
+          res.json(body.Result);
         });
     }
   };
@@ -61,7 +60,7 @@ exports.init = function (swagger) {
     },
     "action": function (req, res) {
       needle.request("put",
-        'http://api.everlive.com/v1/ZsKEbGeFrDPsggLR/profiles/' + req.params.id,
+          'http://api.everlive.com/v1/ZsKEbGeFrDPsggLR/profiles/' + req.params.id,
         req.body,
         {
           json: true,

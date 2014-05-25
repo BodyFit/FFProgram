@@ -1,4 +1,4 @@
-var request = require('request'),
+var needle = require('needle'),
   entree = require('entree'),
   passport = require('passport'),
   BearerStrategy = require('passport-http-bearer').Strategy;
@@ -10,7 +10,7 @@ module.exports = function (app) {
 
   passport.use(new BearerStrategy(
     function (token, done) {
-      request.get(
+      needle.get(
         'http://api.everlive.com/v1/ZsKEbGeFrDPsggLR/Users/me',
         { headers: { "Authorization": "Bearer " + token} },
         function (error, response, body) {
@@ -36,7 +36,7 @@ module.exports = function (app) {
 
   app.post("/auth", function (req, res) {
     var options = req.body;
-    request.post(
+    needle.post(
       'http://api.everlive.com/v1/ZsKEbGeFrDPsggLR/oauth/token',
       { form: { username: options.username, password: options.password, grant_type: "password" } },
       function (error, response, body) {
