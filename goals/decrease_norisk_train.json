@@ -29,6 +29,66 @@
           "c": [1, 0, 0, 1, 0, 0, 0.5]
         }
       }
-    ]
+    ],
+    "details": {
+      "options": [
+        {
+          "training": [7, 11],
+          "meals": [
+            {
+              "time": [6, 10],
+              "nutrients": {
+                "p": 0.14
+              }
+            },
+            {
+              "time": [9, 13],
+              "nutrients": {
+                "p": 0.14,
+                "c": 0.25
+              }
+            },
+            {
+              "time": [11, 15],
+              "nutrients": {
+                "p": 0.14,
+                "c": 0.25,
+                "options": ["salad"]
+              }
+            },
+            {
+              "time": [14, 18],
+              "nutrients": {
+                "p": 0.14,
+                "c": 0.25,
+                "options": ["salad"]
+              }
+            },
+            {
+              "time": [16, 20],
+              "nutrients": {
+                "p": 0.14,
+                "c": 0.25,
+                "options": ["salad"]
+              }
+            },
+            {
+              "time": [18, 22],
+              "nutrients": {
+                "p": 0.14,
+                "options": ["salad"]
+              }
+            },
+            {
+              "time": [21, 1],
+              "nutrients": {
+                "p": 0.14,
+                "options": ["salad"]
+              }
+            }
+          ]
+        }
+      ]
+    }
   }
 }
