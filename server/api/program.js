@@ -1,5 +1,6 @@
 var async = require("async"),
-  pm = require("../programManager");
+  pm = require("../programManager"),
+  profileManager = require("../profileManager");
 
 exports.init = function (swagger) {
   var getProgram = {
@@ -17,8 +18,8 @@ exports.init = function (swagger) {
     "action": function (req, res) {
       var program = req.params.program - 1;
       var userId = req.user.Id;
-      pm.getBiometrics(userId, req.headers.authorization, function (biom) {
-        res.json(pm.getProgram(program, biom));
+      profileManager.getBiometrics(userId, req.headers.authorization, function (biom) {
+        res.json(pm.getProgram(program, biom[biom.length - 1]));
       });
     }
   }
