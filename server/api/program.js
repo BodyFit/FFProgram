@@ -39,7 +39,7 @@ exports.init = function (swagger) {
     "action": function (req, res) {
       res.json(pm.goals);
     }
-  };
+  }
 
   swagger.addGet(getProgram);
   swagger.addGet(getGoals);

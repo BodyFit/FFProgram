@@ -1,5 +1,4 @@
-var entree = require("entree"),
-  _ = require("lodash"),
+var _ = require("lodash"),
   pm = require("../profileManager"),
   needle = require("needle");
 

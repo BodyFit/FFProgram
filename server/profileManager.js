@@ -11,7 +11,7 @@ function _getProfile(userId, token, done) {
     function (error, response) {
       done(response.body.Result[0] || {});
     });
-};
+}
 
 function _getBiometrics(userId, token, done) {
   needle.get(
@@ -25,7 +25,7 @@ function _getBiometrics(userId, token, done) {
     function (error, response) {
       done(response.body.Result || []);
     });
-};
+}
 
 exports.getProfile = _getProfile;
 exports.getBiometrics = _getBiometrics;
